@@ -48,11 +48,11 @@ class SimpleBankAccount extends BankAccount
             return;
         }
         $this->stanje -= $iznos;
-        echo 'Sa racuna je skinuto ' . $iznos . ' sredstava.';
+        echo 'Sa racuna je skinuto ' . $iznos . ' sredstava.</br>';
         
         if ($this->stanje <= -200)
         {
-            echo 'Ovaj simple bank account je blokiran!';
+            echo 'Ovaj simple bank account je blokiran!</br>';
             $this->blokiran = true;
         }
     }
