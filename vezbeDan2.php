@@ -47,7 +47,7 @@ class RAM extends Artikl
     protected $kapacitet;
     protected $frekfencija;
 
-    public function __construct($kapacitet, $frekfencija)
+    public function __construct($kapacitet, $frekfencija, $serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru)
     {
         parent::__construct($serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru);
         $this->kapacitet = $kapacitet;
@@ -60,7 +60,7 @@ class CPU extends Artikl
     protected $brojJezgara;
     protected $frekfencija;
 
-    public function __construct($brojJezgara, $frekfencija)
+    public function __construct($brojJezgara, $frekfencija, $serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru)
     {
         parent::__construct($serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru);
         $this->brojJezgara = $brojJezgara;
@@ -71,7 +71,7 @@ class HDD extends Artikl
 {
     protected $kapacitet;
 
-    public function __construct($kapacitet)
+    public function __construct($kapacitet, $serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru)
     {
         parent::__construct($serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru);
         $this->kapacitet = $kapacitet;
@@ -81,7 +81,7 @@ class GPU extends Artikl
 {
     protected $frekfencija;
     
-    public function __construct($frekfencija)
+    public function __construct($frekfencija, $serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru)
     {
         parent::__construct($serijskiBroj, $proizvodjac, $model, $cena, $stanjeNaLageru);
         $this->frekfencija = $frekfencija;
