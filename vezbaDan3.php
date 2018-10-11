@@ -13,9 +13,9 @@ class MailService
        }
        return self::$instance;
    }
-   public function sendMail()
+   public function sendMail($address, $subject, $text)
    {
-
+        
    }
 }
 class Mail
