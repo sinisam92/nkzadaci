@@ -1,160 +1,142 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-//zadatak1
 class BankAccount
 {
-    protected $stanje = 0;
-    protected $blokiran;
-
+    protected $stanje;
+    protected $blokada;
 
     public function __construct()
     {
-
         $this->stanje = 0;
         $this->blokiran = false;
-
     }
+
     public function getStanje()
     {
         return $this->stanje;
     }
-    public function getBlokiran()
+    public function getBlokada()
     {
-        return $this->blokiran;
+        return $this->blokada;
     }
-
 }
 class SimpleBankAccount extends BankAccount
 {
-    public function uplata($iznos)
+    public function depozit($iznos)
     {
         $this->stanje += $iznos;
-        echo 'Uplaceno ' . $iznos . ' na simple bank racun. </br>';
+        echo 'Na Simple bank racun je uplaceno ' . $iznos . ' . Stanje na Simple bank racunu je ' . $this->stanje . ' !<br>';
 
-        if ($this->blokiran && $this->stanje >=0)
+        if ($this->blokada && $this->stanje >= 0)
         {
-            $this->blokiran = false;
-            echo 'Racun nije u blokadi! </br>';
+            $this->blokada = false;
+            echo 'Ovaj Simple bank racun je odblokiran!';
         }
     }
     public function isplata($iznos)
     {
-        if ($this->blokiran)
-        {   
-            echo 'Ovaj simple account je blokiran. </br>';
+        if ($this->blokada)
+        {
+            echo 'Ovaj Simple bank racun je blokiran zbog nedostatka sredstava.<br>';
             return;
+        
         }
         $this->stanje -= $iznos;
-        echo 'Sa racuna je skinuto ' . $iznos . ' sredstava.</br>';
-        
-        if ($this->stanje <= -200)
-        {
-            echo 'Ovaj simple bank account je blokiran!</br>';
-            $this->blokiran = true;
-        }
+        echo 'Sa Simple bank racuna je skinuto ' . $iznos . ' . Stanje na racunu je ' . $this->stanje . ' !<br>';
+
+    if ($this->stanje <= -200)
+    {
+        echo 'Ovaj Simple bank racun je blokiran. Uplatite sredstva na Simple racun!<br>';
+        $this->blokada = true;
     }
+
+
+    }
+
 }
 class SecuredBankAccount extends BankAccount
 {
-    public function uplata($iznos)
+    public function depozit($iznos)
     {
-        $trenutnoIznos = $iznos - $iznos * 0.025;
-        $this->stanje += $trenutnoIznos;
-        echo 'Uplaceno ' . $trenutnoIznos . ' na secured bank racun. </br>';
+        $pravoStanje = $iznos - $iznos * 0.025;
+        $this->stanje += $pravoStanje;
+        echo 'Na Secured bank racun je uplaceno ' . $pravoStanje. ' . Stanje na Secured bank racunu je ' . $this->stanje . ' !<br>';
 
-        if ($this->blokiran && $this->stanje >=0)
+        if ($this->blokada && $this->stanje >= 0)
         {
-            $this->blokiran = false;
-            echo 'Racun nije u blokadi! </br>';
+            $this->blokada = false;
+            echo 'Ovaj Secured bank racun je odblokiran!';
         }
     }
     public function isplata($iznos)
     {
-        if ($this->blokiran)
-        {   
-            echo 'Ovaj secured account je blokiran. </br>';
-            return;
-        }
-
-        $trenutnoIznos = $iznos - $iznos * 0.025;
-        $this->stanje -= $trenutnoIznos;
-        echo 'Sa secured bank account je skinuto ' . $trenutnoIznos . 'sredstava. </br>';
-
-        if ($this->stanje <= -1000)
+        if ($this->blokada)
         {
-            echo 'Ovaj simple bank account je blokiran! </br>';
-            $this->blokiran = true;
+            echo 'Ovaj Secured bank racun je blokiran zbog nedostatka sredstava.<br>';
+            return;
+        
         }
-    
+        $pravoStanje = $iznos - $iznos * 0.025;
+        $this->stanje -= $pravoStanje;
+        echo 'Sa Secured bank racuna je skinuto ' . $pravoStanje . ' . Stanje na Secured racunu je ' . $this->stanje . ' !<br>';
+
+    if ($this->stanje <= -1000)
+    {
+        echo 'Ovaj Secured bank racun je blokiran. Uplatite sredstva na racun!<br>';
+        $this->blokada = true;
     }
+
+
+    }
+
 }
 class User
 {
-    protected $ime;
-    protected $prezime;
+    public $ime;
+    public $prezime;
     private $simpleBankAccount;
     private $securedBankAccount;
 
-    public function __construct($ime ,$prezime)
+    public function __construct( $ime,  $prezime)
     {
-
         $this->ime = $ime;
         $this->prezime = $prezime;
         $this->simpleBankAccount = new SimpleBankAccount();
         $this->securedBankAccount = new SecuredBankAccount();
-
+        
     }
-    public function uplataNaSimplebankAccount($iznos)
+    public function depositToSimpleBankAccount($iznos)
     {
-        $this->simpleBankAccount->uplata($iznos);
+        $this->simpleBankAccount->depozit($iznos);
     }
-    public function isplataSaSimpleBankAccount($iznos)
+    public function isplataFromSimpleBankAccount($iznos)
     {
         $this->simpleBankAccount->isplata($iznos);
     }
-    public function trenutnoStanjeNaSimpleBankAccount()
+    public function depositToSecuredBankAccount($iznos)
     {
-        echo 'Trenutno stanje na simple bank account-u je ' . $this->simpleBankAccount->getStanje() . '!</br>';
+        $this->securedBankAccount->depozit($iznos);
     }
-    public function uplataNaSecuredbankAccount($iznos)
-    {
-        $this->securedBankAccount->uplata($iznos);
-    }
-    public function isplataSaSecuredBankAccount($iznos)
+    public function isplataFromSecuredBankAccount($iznos)
     {
         $this->securedBankAccount->isplata($iznos);
     }
-    public function trenutnoStanjeNaSecuredBankAccount()
-    {
-        echo 'Trenutno stanje na secured bank account-u je ' . $this->securedBankAccount->getStanje() . '!</br>';
-    }
-
-
 }
 
 $user = new User('Sinisa', 'Manojlovic');
-
-$user->uplataNaSimplebankAccount(400);
-$user->trenutnoStanjeNaSimpleBankAccount();
-$user->isplataSaSimpleBankAccount(500);
-$user->trenutnoStanjeNaSimpleBankAccount();
-$user->isplataSaSimpleBankAccount(200);
-$user->trenutnoStanjeNaSimpleBankAccount();
-$user->isplataSaSimpleBankAccount(100);
-$user->uplataNaSimplebankAccount(1000);
+$user->depositToSimpleBankAccount(500);
+$user->depositToSimpleBankAccount(1400);
+$user->isplataFromSimpleBankAccount(600);
 
 echo '<br>';
 
-$user->uplataNaSecuredbankAccount(400);
-$user->trenutnoStanjeNaSecuredBankAccount();
-$user->isplataSaSecuredBankAccount(500);
-$user->trenutnoStanjeNaSecuredBankAccount();
-$user->isplataSaSecuredBankAccount(200);
-$user->trenutnoStanjeNaSecuredBankAccount();
-$user->isplataSaSecuredBankAccount(100);
-$user->uplataNaSecuredbankAccount(1000);
+$user->depositToSecuredBankAccount(600);
+$user->depositToSecuredBankAccount(400);
+
+$user->isplataFromSecuredBankAccount(600);
+$user->isplataFromSecuredBankAccount(600);
+$user->isplataFromSecuredBankAccount(600);
+$user->isplataFromSecuredBankAccount(600);
+$user->isplataFromSecuredBankAccount(600);
 
 
