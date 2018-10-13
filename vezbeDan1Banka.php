@@ -140,3 +140,12 @@ $user->isplataFromSecuredBankAccount(600);
 $user->isplataFromSecuredBankAccount(600);
 
 
+// function dump($x)
+// {
+//     echo '<pre>';
+//     var_dump($x);
+//     echo '<pre>';
+
+// }
+
+// dump($acc);
