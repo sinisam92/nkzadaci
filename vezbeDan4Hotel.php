@@ -89,9 +89,9 @@ class Hotel
             }
         }
     }
-    public function returnRoom($redniKljuca)
+    public function returnRoom($brojKljuca)
     {
-        $soba = $this->sveSobe[$redniKljuca];
+        $soba = $this->sveSobe[$brojKljuca];
         $soba->slobodnaSoba();
         $this->slobodneSobe[get_class($soba)]++;
     }
@@ -126,7 +126,7 @@ class User
     public function notify($messagge)
     {
         
-        echo 'New message: ' . $messagge . '<br>';
+        echo 'New message: Za G-dina '. $this->ime . ' ' . $this->prezime . ' ' . $messagge . '<br>';
             
     }
 }
@@ -182,12 +182,12 @@ class User
 
     
 
-    $milan = new User('Milan', 'Milanovic', 12345151231);
+    $sinisa = new User('Sinisa', 'Manojlovic', 12345151231);
     
     
 
-    $hotel->regSubscriber($milan);
-    $hotel->notifySubscribers('Vasa soba je spremna, dodjite po kljuc!!!', 'Jednokrevetna');
+    $hotel->regSubscriber($sinisa);
+    $hotel->notifySubscribers('Vasa soba je spremna, dodjite po kljuc na recepciju!', 'Jednokrevetna');
     echo "<pre>";
     var_dump($hotel);
     echo "</pre>";
