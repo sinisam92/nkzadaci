@@ -3,14 +3,12 @@
 abstract class Soba
 {
     protected $brojSobe;
-    protected $tipSobe;
     protected $kupatilo;
     protected $balkon;
     protected $slobodna;
-    protected function __construct(int $brojSobe, bool $kupatilo, bool $balkon,int $tipSobe = 0)
+    protected function __construct(int $brojSobe, bool $kupatilo, bool $balkon)
     {
         $this->brojSobe = $brojSobe;
-        $this->tipSobe = $tipSobe;
         $this->kupatilo = $kupatilo;
         $this->balkon = $balkon;
         $this->slobodna = true;
@@ -31,29 +29,24 @@ abstract class Soba
     {
         $this->slobodna = true;
     }
-
-    public function getTipSobe()
-    {
-        return $this->tipSobe;
-    }
 }
 class Jednokrevetna extends Soba
 {
-   public function __construct(int $brojSobe, bool $kupatilo, bool $balkon, int $tipSobe = 1)
+   public function __construct(int $brojSobe, bool $kupatilo, bool $balkon)
    {
        parent::__construct($brojSobe, $kupatilo, $balkon);
    }
 }
 class Dvokrevetna extends Soba
 {
-    public function __construct(int $brojSobe,  bool $kupatilo,bool $balkon, int $tipSobe = 2)
+    public function __construct(int $brojSobe,  bool $kupatilo,bool $balkon)
     {
         parent::__construct($brojSobe, $kupatilo, $balkon);
     }
 }
 class Trokrevetna extends Soba
 {
-    public function __construct(int $brojSobe, bool $kupatilo,bool $balkon,int $tipSobe = 3)
+    public function __construct(int $brojSobe, bool $kupatilo,bool $balkon)
    {
        parent::__construct($brojSobe, $kupatilo, $balkon);  
    }
@@ -96,9 +89,9 @@ class Hotel
             }
         }
     }
-    public function returnRoom($redniBroj)
+    public function returnRoom($redniKljuca)
     {
-        $soba = $this->sveSobe[$redniBroj];
+        $soba = $this->sveSobe[$redniKljuca];
         $soba->slobodnaSoba();
         $this->slobodneSobe[get_class($soba)]++;
     }
@@ -106,14 +99,14 @@ class Hotel
     {
         $this->subscribers[] = $subscriber;
     }
-    public function notifySubscribers($message, $type)
+    public function notifySubscribers($messagge, $type)
     {
      
         foreach ($this->subscribers as $subscriber) 
         {
             if($this->slobodneSobe[$type] > 0)
             {
-                $subscriber->notify($message);
+                $subscriber->notify($messagge);
             }
         }
     }
@@ -130,10 +123,10 @@ class User
         $this->prezime = $prezime;
         $this->jmbg = $jmbg;
     }
-    public function notify($message)
+    public function notify($messagge)
     {
         
-        echo 'New message: ' . $message . '<br>';
+        echo 'New message: ' . $messagge . '<br>';
             
     }
 }
@@ -195,6 +188,6 @@ class User
 
     $hotel->regSubscriber($milan);
     $hotel->notifySubscribers('Vasa soba je spremna, dodjite po kljuc!!!', 'Jednokrevetna');
-    // echo "<pre>";
-    // var_dump($hotel);
-    // echo "</pre>";
+    echo "<pre>";
+    var_dump($hotel);
+    echo "</pre>";
