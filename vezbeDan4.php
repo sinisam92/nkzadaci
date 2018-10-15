@@ -95,8 +95,15 @@ class Hotel
 }
 }
 class User
-{
+}
+    private $ime;
+    private $prezime;
+    private $jmbg;
 
+    public function __construct(string $ime, string $prezime, int $jmbg)
+    {
+        
+    }
 }
     $jednokrevetna = new Jednokrevetna(2, true, false);
     $jednokrevetna2 = new Jednokrevetna(13, true, true);
